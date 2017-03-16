@@ -178,6 +178,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         Naux\Mail\ SendCloudServiceProvider::class,
+        Laracasts\Flash\FlashServiceProvider::class,
 
 
     ],
