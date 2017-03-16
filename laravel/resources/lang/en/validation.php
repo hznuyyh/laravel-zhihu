@@ -101,6 +101,13 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+        'email'=>[
+            'unique' => '邮箱已被注册',
+        ],
+        'password'=>[
+            'confirmed' => '重复密码不正确',
+        ]
+
     ],
 
     /*
