@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Questions;
 use Illuminate\Http\Request;
+use Auth;
 
 class QuestionController extends Controller
 {
@@ -14,6 +16,7 @@ class QuestionController extends Controller
     public function index()
     {
         //
+        return 'index';
     }
 
     /**
@@ -35,7 +38,13 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data=[
+            'title'=>$request->get('title'),
+            'body'=>$request->get('body'),
+            'user_id'=>Auth::id()
+        ];
+        $question = Questions::create($data);
+        return redirect()->route('questions.show',[$question->id]);
     }
 
     /**
@@ -46,7 +55,8 @@ class QuestionController extends Controller
      */
     public function show($id)
     {
-        //
+        $question = Questions::find($id);
+        return view('question.show',compact('question'));
     }
 
     /**
