@@ -15,7 +15,7 @@
 
     <!-- Scripts -->
     <script>
-        window.Laravel = {!! json_encode([
+        window.Laravel ={!! json_encode([
             'csrfToken' => csrf_token(),
         ]) !!};
     </script>
@@ -82,6 +82,7 @@
     </div>
 
     <!-- Scripts -->
+    @yield('js');
     <script src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>
