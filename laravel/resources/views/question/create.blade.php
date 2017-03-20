@@ -2,7 +2,6 @@
 
 @section('content')
     @include('vendor.ueditor.assets')
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
@@ -19,16 +18,19 @@
                                     <strong>{{$errors->first('title')}}</strong>
                                     @endif
                             </div>
-                            <div class="form-group">
-                                <select class="js-example-basic-multiple" multiple="multiple">
-                                    <option value="AL">Alabama</option>
-                                    <option value="WY">Wyoming</option>
+                            <div class="form-group {{$errors->has('topics')?'has-error':''}}">
+                                <label for="topic">标签</label></br>
+                                <select name = 'topics[]' class=" js-example-placeholder-multiple js-data-example-ajax form-control"  multiple="multiple" required="required">
                                 </select>
+                                @if($errors->has('topics'))
+                                    <span class="help-block"></span>
+                                    <strong>{{$errors->first('topics')}}</strong>
+                                @endif
                             </div>
                             <div class="form-group {{$errors->has('body')?'has-error':''}}">
                                 <label for="body">内容</label>
                                 <script id="container"  name="body" type="text/plain" >
-                                    {{(old(('body')))}}
+                                    {!! (old(('body')))!!}
                                 </script>
                                 @if($errors->has('body'))
                                     <span class="help-block"></span>
@@ -43,9 +45,9 @@
             </div>
         </div>
     </div>
-    @section('js')
-    <script src="http://apps.bdimg.com/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
+
+        <script src="http://apps.bdimg.com/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
     <script type="text/javascript">
         var ue = UE.getEditor('container');
         ue.ready(function () {
@@ -53,7 +55,43 @@
         });
     </script>
     <script type="text/javascript">
-        $(".js-example-basic-multiple").select2();
+        function formatTopic (topic) {
+            return "<div class='select2-result-repository clearfix'>" +
+            "<div class='select2-result-repository__meta'>" +
+            "<div class='select2-result-repository__title'>" +
+            topic.name ? topic.name : "Laravel"   +
+            "</div></div></div>";
+        }
+
+        function formatTopicSelection (topic) {
+            return topic.name || topic.text;
+        }
+
+        $(".js-example-placeholder-multiple").select2({
+            tags: true,
+            placeholder: '选择相关话题',
+            minimumInputLength: 2,
+            ajax: {
+                url: '/laravel-zhihu/laravel/public/api/topics',
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        q: params.term
+                    };
+                },
+                processResults: function (data, params) {
+                    return {
+                        results: data
+                    };
+                },
+                cache: true
+            },
+            templateResult: formatTopic,
+            templateSelection: formatTopicSelection,
+            escapeMarkup: function (markup) { return markup; }
+        });
     </script>
-        @endsection
+
+
 @endsection

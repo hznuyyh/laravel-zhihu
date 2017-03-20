@@ -14,5 +14,20 @@
     "laravel-mix": "^0.8.1",
     "lodash": "^4.17.4",
     "vue": "^2.1.10"
-  }
+  },
+  "name": "laravel-zhihu",
+  "description": "<p align=\"center\"><img src=\"https://laravel.com/assets/img/components/logo-laravel.svg\"></p>",
+  "version": "1.0.0",
+  "main": "webpack.mix.js",
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {
+    "gulp": "^3.9.1"
+  },
+  "keywords": [
+    "zhihu"
+  ],
+  "author": "hznuyyh",
+  "license": "ISC"
 }

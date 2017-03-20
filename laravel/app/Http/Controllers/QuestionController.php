@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Questions;
+use App\Topic;
 use Illuminate\Http\Request;
 use Auth;
+use DB;
 
 class QuestionController extends Controller
 {
@@ -27,7 +29,8 @@ class QuestionController extends Controller
     public function create()
     {
         //
-        return view('question.create');
+        $topics = DB::table('topics')->pluck('name');
+        return view('question.create',compact('topics'));
     }
 
     /**
@@ -41,6 +44,8 @@ class QuestionController extends Controller
         $rules = [
         'title'=>'required|min:2|max:16',
             'body'=>'required|min:24',
+            'topics'=>'required|max:4'
+
     ];
         $message=[
             'title.required'=>'标题不能为空',
@@ -48,7 +53,13 @@ class QuestionController extends Controller
             'title.max'=>'标题不能多于16个字符',
             'body.required'=>'内容不能为空',
             'body.min'=>'内容不能少于24个字符',
+             'topics.required'=>'标签不能为空',
+            'topics.max' => '最多添加4个标签'
         ];
+
+
+        $topics = $this->normalizeTopic($request->get('topics'));
+        //dd($topics);
         $this->validate($request,$rules,$message);
         $data=[
             'title'=>$request->get('title'),
@@ -56,6 +67,7 @@ class QuestionController extends Controller
             'user_id'=>Auth::id()
         ];
         $question = Questions::create($data);
+        $question->topics()->attach($topics);
         return redirect()->route('questions.show',[$question->id]);
     }
 
@@ -103,5 +115,17 @@ class QuestionController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public  function normalizeTopic(array $topics)
+    {
+       return collect($topics)->map(function($topic ){
+            if(is_numeric($topic)){
+                Topic::find($topic)->increment('questions_count');
+                return (int)$topic;
+            }
+            $newTopic = Topic::create(['name'=>$topic,'questions_count'=>1]);
+            return $newTopic->id;
+        })->toArray();
     }
 }

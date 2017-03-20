@@ -5,7 +5,7 @@ return [
     'disk' => 'local',
 
     'route' => [
-        'name' => '/ueditor/server',
+        'name' => 'ueditor/server',
     ],
 
     // 上传 配置
