@@ -14,7 +14,7 @@
                     <div class="panel-body">
                         {!!$question->body!!}
                     </div>
-                    <div class="action">
+                    <div class="actions">
                         @if(Auth::check() && Auth::user()->owns($question))
                             <span class="edit"><a href="http://localhost/laravel-zhihu/laravel/public/questions/{{$question->id}}/edit">编辑</a></span>
                             @endif
