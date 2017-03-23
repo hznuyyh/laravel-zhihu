@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Questions;
-use App\Topic;
+use App\Repositories\QuestionRepository;
 use Illuminate\Http\Request;
 use Auth;
 use DB;
+
 
 class QuestionController extends Controller
 {
@@ -15,6 +15,13 @@ class QuestionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    protected $questionRepository;
+
+    public function __construct(QuestionRepository $questionRepository)
+    {
+        $this->middleware('auth')->except(['index','show']);
+        $this->questionRepository = $questionRepository;
+    }
     public function index()
     {
         //
@@ -58,7 +65,7 @@ class QuestionController extends Controller
         ];
 
 
-        $topics = $this->normalizeTopic($request->get('topics'));
+        $topics = $this->questionRepository->normalizeTopic($request->get('topics'));
         //dd($topics);
         $this->validate($request,$rules,$message);
         $data=[
@@ -66,7 +73,7 @@ class QuestionController extends Controller
             'body'=>$request->get('body'),
             'user_id'=>Auth::id()
         ];
-        $question = Questions::create($data);
+        $question = $this->questionRepository->create($data);
         $question->topics()->attach($topics);
         return redirect()->route('questions.show',[$question->id]);
     }
@@ -79,7 +86,8 @@ class QuestionController extends Controller
      */
     public function show($id)
     {
-        $question = Questions::find($id);
+        //$question = Questions::find($id);
+        $question = $this->questionRepository->selectByIdWithTopics($id);
         return view('question.show',compact('question'));
     }
 
@@ -91,7 +99,12 @@ class QuestionController extends Controller
      */
     public function edit($id)
     {
-        //
+        $question = $this->questionRepository->getQuestionById($id);
+        if(Auth::user()->owns($question)){
+            return view('question.edit',compact('question'));
+        }
+
+        return back();
     }
 
     /**
@@ -104,6 +117,30 @@ class QuestionController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $rules = [
+            'title'=>'required|min:2|max:16',
+            'body'=>'required|min:24',
+            'topics'=>'required|max:4'
+
+        ];
+        $message=[
+            'title.required'=>'标题不能为空',
+            'title.min'=>'标题不能少于2个字符',
+            'title.max'=>'标题不能多于16个字符',
+            'body.required'=>'内容不能为空',
+            'body.min'=>'内容不能少于24个字符',
+            'topics.required'=>'标签不能为空',
+            'topics.max' => '最多添加4个标签'
+        ];
+        $this->validate($request,$rules,$message);
+        $topics = $this->questionRepository->normalizeTopic($request->get('topics'));
+        $question = $this->questionRepository->getQuestionById($id);
+        $question->update([
+           'title'=>$request->get('title'),
+            'body'=>$request->get('body'),
+        ]);
+        $question->topics()->sync($topics);
+        return redirect()->route('questions.show',[$question->id]);
     }
 
     /**
@@ -117,15 +154,5 @@ class QuestionController extends Controller
         //
     }
 
-    public  function normalizeTopic(array $topics)
-    {
-       return collect($topics)->map(function($topic ){
-            if(is_numeric($topic)){
-                Topic::find($topic)->increment('questions_count');
-                return (int)$topic;
-            }
-            $newTopic = Topic::create(['name'=>$topic,'questions_count'=>1]);
-            return $newTopic->id;
-        })->toArray();
-    }
+   
 }
