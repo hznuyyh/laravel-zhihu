@@ -8,18 +8,18 @@
 
 namespace App\Repositories;
 
-use App\Questions;
+use App\Question;
 use App\Topic;
 
 class QuestionRepository
 {
-	public function selectByIdWithTopics($id)
+	public function selectByIdWithTopicsAndAnswers($id)
 	{
-		return $question = Questions::where('id',$id)->with('topics')->first();
+		return $question = Question::where('id',$id)->with(['topics','answers'])->first();
 	}
 	public function create($attributes)
 	{
-		return Questions::create($attributes);
+		return Question::create($attributes);
 	}
 	public  function normalizeTopic(array $topics)
 	{
@@ -34,10 +34,10 @@ class QuestionRepository
 	}
 	
 	public function getQuestionById($id){
-		return Questions::find($id);
+		return Question::find($id);
 	}
 	public function getQuestionFeed(){
-		return Questions::publish()->latest('updated_at')->with('user')->get();
+		return Question::publish()->latest('updated_at')->with('user')->get();
 	}
 
 

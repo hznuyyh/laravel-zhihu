@@ -11,7 +11,7 @@ class Topic extends Model
 	'name', 'questions_count',
 	];
 	public function questions(){
-		return $this->belongsToMany(Questions::class)->withTimestamps();
+		return $this->belongsToMany(Question::class)->withTimestamps();
 	}
 
 }

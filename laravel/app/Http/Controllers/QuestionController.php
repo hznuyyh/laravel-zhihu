@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreQuestionRequest;
 use App\Repositories\QuestionRepository;
 use Illuminate\Http\Request;
 use Auth;
@@ -46,28 +47,10 @@ class QuestionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreQuestionRequest $request)
     {
-        $rules = [
-        'title'=>'required|min:2|max:16',
-            'body'=>'required|min:24',
-            'topics'=>'required|max:4'
-
-    ];
-        $message=[
-            'title.required'=>'标题不能为空',
-            'title.min'=>'标题不能少于2个字符',
-            'title.max'=>'标题不能多于16个字符',
-            'body.required'=>'内容不能为空',
-            'body.min'=>'内容不能少于24个字符',
-             'topics.required'=>'标签不能为空',
-            'topics.max' => '最多添加4个标签'
-        ];
-
-
         $topics = $this->questionRepository->normalizeTopic($request->get('topics'));
         //dd($topics);
-        $this->validate($request,$rules,$message);
         $data=[
             'title'=>$request->get('title'),
             'body'=>$request->get('body'),
@@ -87,7 +70,7 @@ class QuestionController extends Controller
     public function show($id)
     {
         //$question = Questions::find($id);
-        $question = $this->questionRepository->selectByIdWithTopics($id);
+        $question = $this->questionRepository->selectByIdWithTopicsAndAnswers($id);
         return view('question.show',compact('question'));
     }
 
@@ -114,25 +97,9 @@ class QuestionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreQuestionRequest $request, $id)
     {
         //
-        $rules = [
-            'title'=>'required|min:2|max:16',
-            'body'=>'required|min:24',
-            'topics'=>'required|max:4'
-
-        ];
-        $message=[
-            'title.required'=>'标题不能为空',
-            'title.min'=>'标题不能少于2个字符',
-            'title.max'=>'标题不能多于16个字符',
-            'body.required'=>'内容不能为空',
-            'body.min'=>'内容不能少于24个字符',
-            'topics.required'=>'标签不能为空',
-            'topics.max' => '最多添加4个标签'
-        ];
-        $this->validate($request,$rules,$message);
         $topics = $this->questionRepository->normalizeTopic($request->get('topics'));
         $question = $this->questionRepository->getQuestionById($id);
         $question->update([

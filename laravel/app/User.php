@@ -30,10 +30,13 @@ class User extends Authenticatable
 
     public function answers(){
         return $this->hasMany(Answer::class);
-    }
+    }//一个用户有多个答案
     public function question(){
-        return $this->hasMany(Questions::class);
-    }
+        return $this->hasMany(Question::class);
+    }//一个用户有多个问题
+    public function  follows(){
+        return $this->belongsToMany(Question::class,'user_question')->withTimestamps();
+    }//一个用户可以关注多个问题
     public function sendPasswordResetNotification($token)
     {
         $bind_data = [
@@ -51,7 +54,12 @@ class User extends Authenticatable
     public function owns(Model $model){
         return $this->id == $model->user_id;
     }
-
+    public function followThis($question){
+        return $this->follows()->toggle($question);
+    }
+    public function followed($question){
+        return $this->follows()->where('question_id',$question)->count();
+    }
 
 }
 
