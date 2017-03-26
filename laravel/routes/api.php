@@ -21,5 +21,7 @@ Route::middleware('api')->get('/topics', function (Request $request) {
         ->where('name','like','%'.$request->query('q').'%')
         ->get();
 });
-
+Route::middleware('api')->post('/questions/follower', function (Request $request) {
+    return response()->json(['followed'=>false]);
+});
 

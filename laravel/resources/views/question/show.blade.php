@@ -2,7 +2,6 @@
 
 @section('content')
     @include('vendor.ueditor.assets')
-    <link href="http://localhost/laravel-zhihu/laravel/resources/assets/css/topic.css" rel="stylesheet" type="text/css">
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-1">
@@ -36,9 +35,10 @@
                     </div>
                     @if(Auth::check())
                     <div class="panel-body ">
-                        <a href="http://localhost/laravel-zhihu/laravel/public/questions/{{$question->id}}/follow"
-                         class="btn col-xs-6 {{Auth::user()->followed($question->id)? 'btn-followed':'btn-warning' }}" >
-                            {{Auth::user()->followed($question->id)?'取消关注':'关注问题'}}</a>
+                        {{--<a href="http://localhost/laravel-zhihu/laravel/public/questions/{{$question->id}}/follow"--}}
+                         {{--class="btn col-xs-6 {{Auth::user()->followed($question->id)? 'btn-followed':'btn-warning' }}" >--}}
+                            {{--{{Auth::user()->followed($question->id)?'取消关注':'关注问题'}}</a>--}}
+                        <question-follow-button></question-follow-button>
                         <a href="#editor" class="btn btn-primary col-xs-6">编辑答案</a>
                     </div>
                         @endif
@@ -92,7 +92,6 @@
             </div>
         </div>
     </div>
-
     <script type="text/javascript">
         var ue = UE.getEditor('container',{
             toolbars: [
@@ -113,4 +112,54 @@
             ue.execCommand('serverparam','_token',Laravel.csrfToken);
         });
     </script>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+
+    <script>
+        Vue.component('question-follow-button', {
+            template: '<button class="btn btn-default" v-text="text"></button>'
+        });
+
+        const app = new Vue({
+            el: '#app',
+            // 为父组件传递到子组件的属性值，子组件使用props方法接收
+            props:['question', 'user'],
+            // mounted 方法为钩子，在Vue实例化后自动调用
+            mounted() {
+                /**  这种旧的写法会在Laravel5.4中报错
+                 this.$http.post('/api/question/follower', {'question':this.question, 'user':this.user}).then(response => {
+            console.log(response.data);
+        })
+                 */
+                axios.post('/api/questions/follower', {
+                    'question':this.question,
+                    'user':this.user
+                }).then(function(response){
+                    // console.log(response.data);
+                    this.followed = response.data.followed;
+                })
+            },
+            data(){
+                return {
+                    followed : false
+                }
+            },
+            computed:{
+                text(){
+                    return this.followed ? '取消关注' : '关注问题';
+                }
+            },
+            methods:{
+                // 关注动作
+                follow(){
+                    axios.post('/api/questions/follower', {
+                        'question':this.question,
+                        'user':this.user
+                    }).then(function(response){
+                        this.followed = response.data.followed;
+                    })
+                }
+            }
+        });
+    </script>
+
 @endsection

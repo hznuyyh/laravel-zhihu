@@ -53,7 +53,21 @@
     <script src="http://apps.bdimg.com/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
     <script type="text/javascript">
-        var ue = UE.getEditor('container');
+        var ue = UE.getEditor('container',{
+            toolbars: [
+                ['fullscreen', 'source', 'undo', 'redo','horizontal','fontsize','fontfamily',
+                    'bold','italic', 'justifycenter','underline', 'fontborder',
+                    'strikethrough', 'time','date', 'spechars', 'forecolor', 'backcolor','attachment']
+            ],
+            elementPathEnabled:false,
+            enableContextMenu:false,
+            autoClearEmptyNode:true,
+            wordCount:true,
+            imagePopup:false,
+            initialFrameHeight:200,
+            autotypeset:{indent:true,imageBlockLine:'center'}
+
+        });
         ue.ready(function () {
             ue.execCommand('serverparam','_token',Laravel.csrfToken);
         });
