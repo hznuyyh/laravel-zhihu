@@ -37,6 +37,13 @@ class User extends Authenticatable
     public function  follows(){
         return $this->belongsToMany(Question::class,'user_question')->withTimestamps();
     }//一个用户可以关注多个问题
+    public function followers(){
+        return$this->belongsToMany(self::class,'followers','follower_id','followed_id')->withTimestamps();
+    }
+    public function followThisUser($user)
+    {
+        return $this->followers()->toggle($user);
+    }
     public function sendPasswordResetNotification($token)
     {
         $bind_data = [
@@ -60,6 +67,12 @@ class User extends Authenticatable
     public function followed($question){
         return $this->follows()->where('question_id',$question)->count();
     }
-
+    public function followedUser($user){
+        return $this->followers()->where('followed_id',$user)->count();
+    }
+    public function followersUser()
+    {
+        return $this->belongsToMany(self::class, 'followers', 'followed_id', 'follower_id')->withTimestamps();
+    }
 }
 

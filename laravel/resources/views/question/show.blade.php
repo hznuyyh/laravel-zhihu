@@ -34,14 +34,13 @@
                         <span>关注者</span>
                     </div>
                     @if(Auth::check())
-                    <div class="panel-body ">
-                        {{--<a href="http://localhost/laravel-zhihu/laravel/public/questions/{{$question->id}}/follow"--}}
-                         {{--class="btn col-xs-6 {{Auth::user()->followed($question->id)? 'btn-followed':'btn-warning' }}" >--}}
-                            {{--{{Auth::user()->followed($question->id)?'取消关注':'关注问题'}}</a>--}}
-                        <question-follow-button></question-follow-button>
-                        <a href="#editor" class="btn btn-primary col-xs-6">编辑答案</a>
-                    </div>
-                        @endif
+                        <div class="panel-body ">
+                            <a href="http://localhost/laravel-zhihu/laravel/public/questions/{{$question->id}}/follow"
+                               class="btn col-xs-6 {{Auth::user()->followed($question->id)? 'btn-followed':'btn-warning' }}" >
+                                {{Auth::user()->followed($question->id)?'取消关注':'关注问题'}}</a>
+                            <a href="#editor" class="btn btn-primary col-xs-6">编辑答案</a>
+                        </div>
+                    @endif
                 </div>
             </div>
             <div class="col-md-8 col-md-offset-1">
@@ -88,6 +87,44 @@
                             <a href="http://localhost/laravel-zhihu/laravel/public/login" class=" btn btn-success btn-block">登录后提供答案</a>
                             @endif
                     </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="panel panel-default">
+                    <div class="panel-heading followers_count">
+                        <span>关于作者</span>
+                    </div>
+                        <div class="panel-body ">
+                            <div class="media">
+                                <div class="media-left">
+                                    <img src="{{$question->user->avatar}}" alt="name">
+                                </div>
+                                <div class="media-body">
+                                    <h4 class="media-heading">{{$question->user->name}}</h4>
+                                </div>
+                                <div class="user-statics" style=" margin-top: 20px;display: flex;">
+                                <div class="static-item text-center" style="padding: 2px 20px;">
+                                    <div class="class-text">问题</div>
+                                    <div class="class-count">{{$question->user->questions_count}}</div>
+                                </div>
+                                <div class="static-item text-center" style="padding: 2px 20px;">
+                                    <div class="class-text">回答</div>
+                                    <div class="class-count">{{$question->user->answers_count}}</div>
+                                </div>
+                                <div class="static-item text-center"style="padding: 2px 20px;">
+                                    <div class="class-text">关注者</div>
+                                    <div class="class-count">{{$question->user->followers_count}}</div>
+                                </div>
+                                    </div>
+                            </div>
+                            @if(Auth::check())
+                            <a href="http://localhost/laravel-zhihu/laravel/public/api/user/follow"
+                               class="btn col-xs-6 {{Auth::user()->followedUser($question->user_id)? 'btn-followed':'btn-warning' }}" >
+                                {{Auth::user()->followedUser($question->user_id)?'取消关注':'关注作者'}}</a>
+                            <a href="#editor" class="btn btn-primary col-xs-6">发送私信</a>
+                                @endif
+                        </div>
+
                 </div>
             </div>
         </div>

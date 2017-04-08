@@ -24,4 +24,7 @@ Route::middleware('api')->get('/topics', function (Request $request) {
 Route::middleware('api')->post('/questions/follower', function (Request $request) {
     return response()->json(['followed'=>false]);
 });
+Route::post('/question/follower','QuestionFollowController@follower')->middleware('auth:api');
 
+Route::get('/user/followers/{id}','FollowersController@index');
+Route::get('/user/follow','FollowersController@follow');

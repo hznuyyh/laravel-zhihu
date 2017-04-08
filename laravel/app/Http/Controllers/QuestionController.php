@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreQuestionRequest;
 use App\Repositories\QuestionRepository;
+use App\User;
 use Illuminate\Http\Request;
 use Auth;
 use DB;
@@ -57,6 +58,7 @@ class QuestionController extends Controller
             'user_id'=>Auth::id()
         ];
         $question = $this->questionRepository->create($data);
+        User::find(Auth::id())->increment('questions_count');
         $question->topics()->attach($topics);
         return redirect()->route('questions.show',[$question->id]);
     }

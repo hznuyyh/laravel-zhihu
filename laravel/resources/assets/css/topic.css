@@ -41,3 +41,12 @@ a.topic:hover{
     color: #0d3625;
     background: #9d9d9d;
 }
+.user-statics , .user-actions{
+        margin-top: 20px;
+}
+.user-statics{
+    display: flex;
+}
+.static-item{
+    padding: 2px 20px;
+}
