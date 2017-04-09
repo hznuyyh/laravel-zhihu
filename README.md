@@ -30,4 +30,5 @@ php artisan make:auth
 
 ### 4-9更新<br>
 增加了用户之间的相互关注模块，放弃了Vue的组件开发<br>
-对Auth关系和model有了更进一步的理解，对get和post的关系还需要继续深入。
+对Auth关系和model有了更进一步的理解，对get和post的关系还需要继续深入。<br>
+为用户之间的相互关注增加了邮件发送提醒
