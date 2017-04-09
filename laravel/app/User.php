@@ -40,10 +40,6 @@ class User extends Authenticatable
     public function followers(){
         return$this->belongsToMany(self::class,'followers','follower_id','followed_id')->withTimestamps();
     }
-    public function followThisUser($user)
-    {
-        return $this->followers()->toggle($user);
-    }
     public function sendPasswordResetNotification($token)
     {
         $bind_data = [
@@ -63,6 +59,10 @@ class User extends Authenticatable
     }
     public function followThis($question){
         return $this->follows()->toggle($question);
+    }
+    public function followThisUser($user)
+    {
+        return $this->followers()->toggle($user);
     }
     public function followed($question){
         return $this->follows()->where('question_id',$question)->count();

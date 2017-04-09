@@ -118,8 +118,8 @@
                                     </div>
                             </div>
                             @if(Auth::check())
-                            <a href="http://localhost/laravel-zhihu/laravel/public/api/user/follow"
-                               class="btn col-xs-6 {{Auth::user()->followedUser($question->user_id)? 'btn-followed':'btn-warning' }}" >
+                            <a href="http://localhost/laravel-zhihu/laravel/public/user/{{$question->user_id}}/follow"
+                               class="btn col-xs-6 {{Auth::user()->followedUser($question->user_id)? 'btn-followed':'btn-warning' }}"  >
                                 {{Auth::user()->followedUser($question->user_id)?'取消关注':'关注作者'}}</a>
                             <a href="#editor" class="btn btn-primary col-xs-6">发送私信</a>
                                 @endif
