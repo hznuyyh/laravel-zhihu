@@ -1,6 +1,7 @@
 <?php
 
 namespace App;
+use App\Mailer\UserMailer;
 use Illuminate\Database\Eloquent\Model;
 use Mail;
 use Illuminate\Notifications\Notifiable;
@@ -38,21 +39,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Question::class,'user_question')->withTimestamps();
     }//一个用户可以关注多个问题
     public function followers(){
-        return$this->belongsToMany(self::class,'followers','follower_id','followed_id')->withTimestamps();
+        return $this->belongsToMany(self::class,'followers','follower_id','followed_id')->withTimestamps();
     }
     public function sendPasswordResetNotification($token)
     {
-        $bind_data = [
-            'url' => url('password/reset',$token)
-        ];
-
-        $template = new SendCloudTemplate('reset_password', $bind_data);
-
-        Mail::raw($template, function ($message)  {
-            $message->from('623936780@qq.com', 'laravel-zhihu');
-
-            $message->to($this->email);
-        });
+        (new UserMailer())->passwordRestEmail($this->email,$token);
     }
     public function owns(Model $model){
         return $this->id == $model->user_id;
@@ -65,14 +56,27 @@ class User extends Authenticatable
         return $this->followers()->toggle($user);
     }
     public function followed($question){
-        return $this->follows()->where('question_id',$question)->count();
+        return !! $this->follows()->where('question_id',$question)->count();
     }
     public function followedUser($user){
-        return $this->followers()->where('followed_id',$user)->count();
+        return !! $this->followers()->where('followed_id',$user)->count();
     }
     public function followersUser()
     {
         return $this->belongsToMany(self::class, 'followers', 'followed_id', 'follower_id')->withTimestamps();
+    }
+
+    public function votes()
+    {
+        return $this->belongsToMany(Answer::class,'votes')->withTimestamps();
+    }
+    public function voteFor($answer)
+    {
+        return $this->votes()->toggle($answer);
+    }
+    public function hasVotedFor($answer)
+    {
+        return !! $this->votes()->where('answer_id',$answer)->count();
     }
 }
 

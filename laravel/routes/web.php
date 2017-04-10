@@ -29,3 +29,5 @@ Route::post('questions/{question}/answer','AnswerController@store' );
 Route::get('questions/{question}/follow','QuestionFollowController@follow');
 Route::get('/user/{id}/follow','FollowersController@follow');
 Route::get('notifications','NotificationsController@index');
+Route::get('/answer/{id}/votes/users','VotesController@users');
+Route::post('/answer/{id}/vote','VotesController@follow');

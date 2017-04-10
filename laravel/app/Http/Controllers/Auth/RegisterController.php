@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
+use App\Mailer\UserMailer;
 use Mail;
 use App\User;
 use App\Http\Controllers\Controller;
@@ -75,15 +76,6 @@ class RegisterController extends Controller
     }
     private function  sendVerifyEmailTo($user)
     {
-        // 模板变量
-        $bind_data = ['url' => route('email.verify',['token'=>$user->confirmation_token]),
-            'name'=>$user->name];
-        $template = new SendCloudTemplate('laravel_zhihu', $bind_data);
-
-        Mail::raw($template, function ($message) use ($user) {
-            $message->from('623936780@qq.com', 'laravel-zhihu');
-
-            $message->to($user->email);
-        });
+        (new UserMailer())->registerEmail($user);
     }
 }

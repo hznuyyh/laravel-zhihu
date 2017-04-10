@@ -51,12 +51,15 @@
                     <div class="panel-body content">
                         @foreach($question->answers as $answer)
                             <div class="media">
+                                @if(Auth::check())
                                 <div class="media-left">
-                                    <span href="#">
-                                        <img style=" width:36px ;" src=" http://localhost/laravel-zhihu/laravel/public/{{$answer->user->avatar}}"
-                                             alt="{{ $answer->user->name }}">
-                                    </span>
+                                    <a href="http://localhost/laravel-zhihu/laravel/public/answer/{{$answer->id}}/votes/users"
+                                       class="btn {{Auth::user()->hasVotedFor($answer->id)? 'btn-default':'btn-primary' }}"
+                                    >
+                                        {{$answer->votes_count}}
+                                    </a>
                                 </div>
+                                @endif
                                 <div class="media-body">
                                     <h4 class="media-heading">
                                         <a href="http://localhost/laravel-zhihu/laravel/public/questions/{{ $answer->user->name }}">
