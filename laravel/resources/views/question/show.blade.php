@@ -114,48 +114,21 @@
                                     <div class="class-text">回答</div>
                                     <div class="class-count">{{$question->user->answers_count}}</div>
                                 </div>
-                                <div class="static-item text-center"style="padding: 2px 20px;">
+                                <div class="static-item text-center" style="padding: 2px 20px;">
                                     <div class="class-text">关注者</div>
                                     <div class="class-count">{{$question->user->followers_count}}</div>
                                 </div>
                             </div>
-                                <div>
+                            <div>
                             @if(Auth::check())
                             <a href="http://localhost/laravel-zhihu/laravel/public/user/{{$question->user_id}}/follow"
                                class="btn col-xs-6 {{Auth::user()->followedUser($question->user_id)? 'btn-followed':'btn-warning' }}"  >
                                 {{Auth::user()->followedUser($question->user_id)?'取消关注':'关注作者'}}</a>
-                                        <button type="button" class="btn btn-primary col-xs-6" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">发送私信</button>
+                                    <send-message from="{{Auth::id()}}" user="{{$question->user_id}}" style="padding-top: 35px"></send-message>
                                 @endif
                             </div>
-                                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                <h4 class="modal-title" id="exampleModalLabel">发送私信</h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form>
-                                                    <div class="form-group">
-                                                        <label for="message-text" class="control-label">内容:</label>
-                                                        <textarea class="form-control" id="message-text"></textarea>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                            <div class="modal-body hidden">
-                                                <div class="alert alert-success"  >
-                                                    <strong>私信发送成功</strong>
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                                <button type="button" class="btn btn-primary">发送</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                        </div>
 
+                        </div>
                 </div>
             </div>
         </div>
@@ -176,15 +149,8 @@
             autotypeset:{indent:true,imageBlockLine:'center'}
 
         });
-        ue.ready(function () {
-            ue.execCommand('serverparam','_token',Laravel.csrfToken);
-        });
-        $('#exampleModal').on('show.bs.modal', function (event) {
 
-        });
 
     </script>
-
-
 
 @endsection

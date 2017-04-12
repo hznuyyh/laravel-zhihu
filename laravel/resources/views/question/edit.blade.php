@@ -90,7 +90,7 @@
             placeholder: '选择相关话题',
             minimumInputLength: 2,
             ajax: {
-                url: '/laravel-zhihu/laravel/public/api/topics',
+                url: 'laravel-zhihu/laravel/public/api/topics',
                 dataType: 'json',
                 delay: 250,
                 data: function (params) {

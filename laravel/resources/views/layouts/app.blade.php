@@ -12,9 +12,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
-    <link href="http://localhost/laravel-zhihu/laravel/resources/assets/css/topic.css" rel="stylesheet" type="text/css">
+
     <!-- Scripts -->
     <script>
         window.Laravel ={!! json_encode([
@@ -83,8 +81,8 @@
         @yield('content')
     </div>
     <!-- Scripts -->
-    {{--<script src="http://localhost/laravel-zhihu/laravel/resources/assets/js/app.js"></script>--}}
-    <script src="http://apps.bdimg.com/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+    <script src="{{ asset('js/app.js') }}"></script>
+
 </body>
 </html>
