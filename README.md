@@ -8,14 +8,17 @@ PHP版本过低，更新PHP版本5.4->7.0
 增加了SendCloud配置<br>
 ### 3-14更新  
 完成了注册内容，邮件发送需要以下几个配置<br>
+`Naux/SendCloud
 `
-Naux/SendCloud
-  Guzzplehttp/guzzle
+`
+Guzzplehttp/guzzle
 `
 windows下在文件根目录执行<br>
 `
 composer require guzzlehttp/guzzle
-  composer require naux/sendcloud
+`
+`
+  composer require naux/sendcloud
 `
 之后我们我们Composer.json看到我们成功安装了这两个配置
 
@@ -39,3 +42,10 @@ php artisan make:auth
 
 ### 4-10更新<br>
 增加了用户对答案的点赞功能
+
+### 4-12更新<br>
+增加了webpack对js和css的管理，参见Package.json<br>
+Laravel 5.4升级Elixir 为Mix,全新的Mix使用webpack构建，具体参照<br>
+[Laravel Mix](http://laravelacademy.org/post/6798.html)<br>
+因此能重新开始进行组件化开发<br>
+同时更新的发送私信功能就采用了vue+webpack的新模式<br>
