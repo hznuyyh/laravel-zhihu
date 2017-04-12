@@ -17,9 +17,9 @@ windows下在文件根目录执行<br>
 `
 composer require guzzlehttp/guzzle
 `
-`
+```
   composer require naux/sendcloud
-`
+```
 之后我们我们Composer.json看到我们成功安装了这两个配置
 
 Laravel5版本取消了auth,所以需要我们手动重新加载<br>
