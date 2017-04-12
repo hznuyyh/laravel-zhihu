@@ -7,19 +7,19 @@ PHP版本过低，更新PHP版本5.4->7.0
 感觉还是5.0好用<br>
 增加了SendCloud配置<br>
 ### 3-14更新  
-完成了注册内容，邮件发送需要以下几个配置
+完成了注册内容，邮件发送需要以下几个配置<br>
 `
-Naux/SendCloud<br>
-Guzzplehttp/guzzle<br>
+Naux/SendCloud
+Guzzplehttp/guzzle
 `
 windows下在文件根目录执行<br>
 `
-composer require guzzlehttp/guzzle<br>
-composer require naux/sendcloud<br>
+composer require guzzlehttp/guzzle
+composer require naux/sendcloud
 `
 之后我们我们Composer.json看到我们成功安装了这两个配置
 
-Laravel5版本取消了auth,所以需要我们手动重新加载
+Laravel5版本取消了auth,所以需要我们手动重新加载<br>
 `
 php artisan make:auth
 `
