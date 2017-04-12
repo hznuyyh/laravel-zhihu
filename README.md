@@ -10,14 +10,12 @@ PHP版本过低，更新PHP版本5.4->7.0
 完成了注册内容，邮件发送需要以下几个配置<br>
 `
 Naux/SendCloud
-`
-`
-Guzzplehttp/guzzle
+  Guzzplehttp/guzzle
 `
 windows下在文件根目录执行<br>
 `
 composer require guzzlehttp/guzzle
-composer require naux/sendcloud
+  composer require naux/sendcloud
 `
 之后我们我们Composer.json看到我们成功安装了这两个配置
 
