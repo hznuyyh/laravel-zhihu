@@ -28,3 +28,8 @@ Route::post('/question/follower','QuestionFollowController@follower')->middlewar
 
 Route::get('/user/followers/{id}','FollowersController@index');
 Route::post('/message/store','MessageController@store');
+
+
+Route::post('/comments','CommentsController@store');
+Route::get('/answer/{id}/comments','CommentsController@answer');
+Route::get('/question/{id}/comments','CommentsController@question');

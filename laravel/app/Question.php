@@ -27,4 +27,7 @@ class Question extends Model
 	public function is_hidden(){
 		return $this->is_hidden === 'T';
 	}
+	public function comments(){
+		return $this->morphMany('App\Comment','commentable');
+	}
 }

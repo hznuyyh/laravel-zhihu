@@ -18,6 +18,11 @@
         window.Laravel ={!! json_encode([
             'csrfToken' => csrf_token(),
         ]) !!};
+        @if(Auth::check())
+            window.zhihu = {
+            name:"hahah"
+        };
+        @endif
     </script>
 </head>
 <body>

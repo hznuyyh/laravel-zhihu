@@ -13,6 +13,7 @@ require('./bootstrap');
 
 Vue.component('example', require('./components/Example.vue'));
 Vue.component('send-message', require('./components/SendMessage.vue'));
+Vue.component('comment', require('./components/Comments.vue'));
 const app = new Vue({
     el: '#app'
 });

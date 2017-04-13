@@ -23,9 +23,11 @@
                                 {{csrf_field ()}}
                                 <button class="button is-naked delete-button">删除</button>
                             </form>
+                            <comment type = 'question' model = '{{$question->id}}' count = '{{$question->comments_count}}'></comment>
                         @endif
                     </div>
                 </div>
+
             </div>
             <div class="col-md-3">
                 <div class="panel panel-default">
@@ -41,6 +43,7 @@
                             <a href="#editor" class="btn btn-primary col-xs-6">编辑答案</a>
                         </div>
                     @endif
+
                 </div>
             </div>
             <div class="col-md-8 col-md-offset-1">
@@ -67,7 +70,9 @@
                                         </a>
                                     </h4>
                                     {!! $answer->body !!}
+                                    <comment type = 'answer' model = '{{$answer->id}}' count = '{{$answer->comments()->count()}}' user = {{Auth::id()}}></comment>
                                 </div>
+
                             </div>
                         @endforeach
                         @if(Auth::check())
