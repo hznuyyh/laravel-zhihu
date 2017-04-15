@@ -49,3 +49,8 @@ Laravel 5.4升级Elixir 为Mix,全新的Mix使用webpack构建，具体参照<br
 [Laravel Mix](http://laravelacademy.org/post/6798.html)<br>
 因此能重新开始进行组件化开发<br>
 同时更新的发送私信功能就采用了vue+webpack的新模式<br>
+
+### 4-15更新<br>
+增加了用户评论，同样采用了Vue的组件化开发<br>
+但还存在一点小瑕疵<br>
+Auth::id()的值取不到等问题
