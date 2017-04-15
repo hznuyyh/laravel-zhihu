@@ -23,8 +23,8 @@
                                 {{csrf_field ()}}
                                 <button class="button is-naked delete-button">删除</button>
                             </form>
-                            <comment type = 'question' model = '{{$question->id}}' count = '{{$question->comments_count}}'></comment>
                         @endif
+                            <comment  type = 'question' model = '{{$question->id}}' count = '{{$question->comments()->count()}}' user = {{Auth::id()}}></comment>
                     </div>
                 </div>
 

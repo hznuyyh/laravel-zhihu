@@ -2,32 +2,39 @@
 
 namespace App\Http\Controllers;
 
-use App\Answer;
-use App\Question;
-use App\Comment;
+use App\Repositories\AnswerRepository;
+use App\Repositories\CommentRepository;
+use App\Repositories\QuestionRepository;
 use Illuminate\Http\Request;
 use Auth;
 class CommentsController extends Controller
 {
     //
+	protected $answer;
+	protected $question;
+	protected $comment;
+	public function __construct(AnswerRepository $answerRepository,QuestionRepository $questionRepository,CommentRepository $commentRepository)
+	{
+		$this->answer = $answerRepository;
+		$this->question = $questionRepository;
+		$this->comment = $commentRepository;
+	}
+
 	public function answer($id){
-		$answer = Answer::with('comments','comments.user')->where('id',$id)->first();
-		return $answer->comments;
+		return $this->answer->getAnswerCommentsById($id);
 	}
 	public function question($id){
-		$question = Question::with('comments','comments.user')->where('id',$id)->first();
-		return $question->comments;
+		return $this->question->getQuestionCommentsById($id);
 	}
 	public function store(){
 		$model = $this->getModelNameFromType(request('type')); 
 		
-		$comment = Comment::create([
+		return $this->comment->create([
 			'commentable_id' => request('model'),
 			'commentable_type' => $model,
 			'user_id' => request('user'),
 			'body' => request('body')
 		]);
-		return $comment;
 	} 
 	public function getModelNameFromType($type){
 		return $type === 'question' ? 'App\Question' :'App\Answer';

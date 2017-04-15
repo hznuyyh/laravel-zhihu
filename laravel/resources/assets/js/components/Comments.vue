@@ -1,8 +1,7 @@
 <template>
     <div>
         <button
-                class="btn is-naked delete-button"
-                style="margin-top: -36px;"
+                style="margin-top:24px; border:none;margin-left: -89px;background: white "
                 v-text = 'text'
                 @click=" showCommentsForm ">
         </button>
@@ -73,6 +72,7 @@
                     this.newComment.body = response.data.body
                     this.comments.push(this.newComment)
                     this.body = ''
+                    this.count++
                 })
             },
             showCommentsForm() {
