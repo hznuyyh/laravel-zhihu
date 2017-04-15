@@ -1,7 +1,8 @@
 <template>
     <div>
         <button
-                style="margin-top:24px; border:none;margin-left: -89px;background: white "
+                class="pull-left"
+                style="margin-top:-1px; margin-left : 15px; border:none;background-color:transparent; color: #3DA0DB"
                 v-text = 'text'
                 @click=" showCommentsForm ">
         </button>
@@ -46,8 +47,8 @@
                 body:'',
                 comments:[],
                 newComment:{
-                    user:{
-                        name:'yyh'
+                    users:{
+                        name:zhihu.name
                     },
                     body:''
                 }

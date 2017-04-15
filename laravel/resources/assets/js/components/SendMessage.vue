@@ -39,7 +39,7 @@
         },
         methods:{
             store() {
-                axios.post('laravel-zhihu/laravel/public/api/message/store', {
+                axios.post('/laravel-zhihu/laravel/public/api/message/store', {
                     'user':this.user,'body':this.body,'from':this.from
                  }).then((response) => {
                     this.status = response.data.status;
