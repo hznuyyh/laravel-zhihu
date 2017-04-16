@@ -32,6 +32,7 @@ Route::get('notifications','NotificationsController@index');
 Route::get('/answer/{id}/votes/users','VotesController@users');
 Route::post('/answer/{id}/vote','VotesController@follow');
 Route::get('/inbox','InboxController@index');
+Route::post('/inbox/{dialogId}/store','InboxController@store');
 Route::get('/inbox/{dialogId}','InboxController@show');
 
 

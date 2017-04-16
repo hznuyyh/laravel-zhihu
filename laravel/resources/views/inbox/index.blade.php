@@ -12,10 +12,10 @@
                             <div class="media">
                                 <div class="media-left">
                                     <a href="#">
-                                        @if(Auth::id() == $key)
-                                            <img  width="40px" src="/laravel-zhihu/laravel/public/{{$messageGroup->first()->fromUser->avatar}}" alt="">
+                                        @if(Auth::id() == $messageGroup->last()->to_user_id)
+                                            <img  width="40px" src="/laravel-zhihu/laravel/public/{{$messageGroup->last()->fromUser->avatar}}" alt="">
                                             @else
-                                            <img  width="40px" src="/laravel-zhihu/laravel/public/{{$messageGroup->first()->toUser->avatar}}" alt="">
+                                            <img  width="40px" src="/laravel-zhihu/laravel/public/{{$messageGroup->last()->toUser->avatar}}" alt="">
                                         @endif
                                     </a>
 
@@ -23,10 +23,10 @@
                                 <div class="media-body">
                                     <h4 class="media-heading">
                                         <a href="">
-                                            @if(Auth::id() == $key)
-                                                {{$messageGroup->first()->fromUser->name}}
+                                            @if(Auth::id() == $messageGroup->last()->to_user_id)
+                                                {{$messageGroup->last()->fromUser->name}}
                                                 @else
-                                                {{$messageGroup->first()->toUser->name}}
+                                                {{$messageGroup->last()->toUser->name}}
                                             @endif
                                         </a>
                                     </h4>
@@ -40,7 +40,6 @@
 
                                 </div>
                             </div>
-
                         @endforeach
                     </div>
                 </div>
