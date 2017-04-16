@@ -19,9 +19,12 @@
                         <div v-if="comments.length > 0">
                             <div class="media" v-for="comment in comments">
                                 <div class="media-left">
+                                    <a href="#">
+                                        <img width="24" class="media-object" :src="comment.user.avatar">
+                                    </a>
                                 </div>
                                 <div class="media-body">
-                                    <h4 class="media-heading"></h4>
+                                    <h4 class="media-heading">{{comment.user.name}}</h4>
                                     {{comment.body}}
                                 </div>
                             </div>
@@ -45,13 +48,7 @@
         data() {
             return {
                 body:'',
-                comments:[],
-                newComment:{
-                    users:{
-                        name:zhihu.name
-                    },
-                    body:''
-                }
+                comments:[]
             }
         },
         computed:{
@@ -70,8 +67,14 @@
                 axios.post('/laravel-zhihu/laravel/public/api/comments', {
                     'type':this.type,'model':this.model,'body':this.body,'user':this.user
                 }).then((response) => {
-                    this.newComment.body = response.data.body
-                    this.comments.push(this.newComment)
+                    let comment ={
+                        user:{
+                            name:zhihu.name,
+                            avatar:zhihu.avatar
+                        },
+                        body: response.data.body
+                    }
+                    this.comments.push(comment)
                     this.body = ''
                     this.count++
                 })

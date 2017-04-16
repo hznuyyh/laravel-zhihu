@@ -19,9 +19,10 @@
             'csrfToken' => csrf_token(),
         ]) !!};
         @if(Auth::check())
-            window.zhihu = {
-            name:"hahah"
-        };
+                window.zhihu = {
+            name:"{{Auth::user()->name}}",
+            avatar:"{{Auth::user()->avatar}}"
+        }
         @endif
     </script>
 </head>

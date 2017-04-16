@@ -12182,19 +12182,16 @@ module.exports = function spread(callback) {
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['type', 'model', 'count', 'user'],
     data: function data() {
         return {
             body: '',
-            comments: [],
-            newComment: {
-                users: {
-                    name: zhihu.name
-                },
-                body: ''
-            }
+            comments: []
         };
     },
 
@@ -12216,8 +12213,14 @@ module.exports = function spread(callback) {
             axios.post('/laravel-zhihu/laravel/public/api/comments', {
                 'type': this.type, 'model': this.model, 'body': this.body, 'user': this.user
             }).then(function (response) {
-                _this.newComment.body = response.data.body;
-                _this.comments.push(_this.newComment);
+                var comment = {
+                    user: {
+                        name: zhihu.name,
+                        avatar: zhihu.avatar
+                    },
+                    body: response.data.body
+                };
+                _this.comments.push(comment);
                 _this.body = '';
                 _this.count++;
             });
@@ -33126,11 +33129,21 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: "media"
     }, [_c('div', {
       staticClass: "media-left"
-    }), _vm._v(" "), _c('div', {
+    }, [_c('a', {
+      attrs: {
+        "href": "#"
+      }
+    }, [_c('img', {
+      staticClass: "media-object",
+      attrs: {
+        "width": "24",
+        "src": comment.user.avatar
+      }
+    })])]), _vm._v(" "), _c('div', {
       staticClass: "media-body"
     }, [_c('h4', {
       staticClass: "media-heading"
-    }), _vm._v("\n                                " + _vm._s(comment.body) + "\n                            ")])])
+    }, [_vm._v(_vm._s(comment.user.name))]), _vm._v("\n                                " + _vm._s(comment.body) + "\n                            ")])])
   })) : _vm._e()]), _vm._v(" "), _c('div', {
     staticClass: "modal-footer"
   }, [_c('input', {
