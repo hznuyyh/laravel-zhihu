@@ -25,6 +25,9 @@ Route::resource('questions','QuestionController',['name'=>
        'show'=>'questions.show',
    ]
 ]);
+Route::get('avatar','UserController@avatar');
+Route::post('avatar','UserController@changeAvatar');
+
 Route::post('questions/{question}/answer','AnswerController@store' );
 Route::get('questions/{question}/follow','QuestionFollowController@follow');
 Route::get('/user/{id}/follow','FollowersController@follow');

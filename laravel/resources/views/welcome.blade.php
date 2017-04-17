@@ -83,11 +83,10 @@
                 </div>
 
                 <div class="links">
-                    <a href="https://laravel.com/docs"></a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/hznuyyh/laravel-zhihu">GitHub</a>
+                    <a href="http://localhost/laravel-zhihu/laravel/public/questions">问题主页</a>
+                    <a href="http://localhost/laravel-zhihu/laravel/public/questions/create">问题发布</a>
+                    <a href="http://localhost/laravel-zhihu/laravel/public/inbox">消息列表</a>
+                    <a href="https://github.com/hznuyyh/laravel-zhihu">MyGitHub</a>
                 </div>
             </div>
         </div>
