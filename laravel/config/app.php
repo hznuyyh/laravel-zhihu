@@ -179,8 +179,8 @@ return [
 
         Naux\Mail\ SendCloudServiceProvider::class,
         Laracasts\Flash\FlashServiceProvider::class,
-        Overtrue\LaravelUEditor\UEditorServiceProvider::class
-
+        Overtrue\LaravelUEditor\UEditorServiceProvider::class,
+        Laracasts\Flash\FlashServiceProvider::class,
 
     ],
 

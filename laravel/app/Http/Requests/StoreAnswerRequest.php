@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-
+use Request;
 class StoreAnswerRequest extends FormRequest
 {
     /**
